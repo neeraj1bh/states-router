@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import Header from "./components/Header";
 
 import { getCart, clearCart } from "@/api/cart";
-import CartProvider from "./components/CartContext";
+import CartProvider from "./store/CartProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
