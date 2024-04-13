@@ -4,14 +4,14 @@ import Link from "next/link";
 
 import CartPopup from "./CartPopup";
 import { type Cart } from "@/api/types";
-import { useCart } from "./CartContext";
+import { useCart } from "../store/store";
 
 export default function Header({
   clearCartAction,
 }: {
   clearCartAction: () => Promise<Cart>;
 }) {
-  const [cart] = useCart();
+  const  cart = useCart();
   const [showCart, setShowCart] = useState(false);
 
   return (
