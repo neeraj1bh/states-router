@@ -1,13 +1,14 @@
 "use client";
 import { type Cart } from "@/api/types";
-import { useCart } from "./CartContext";
+import { useSetAtom, useStore } from "jotai";
+import { cartAtom } from "../store/atoms";
 
 export default function AddToCart({
   addToCartAction,
 }: {
   addToCartAction: () => Promise<Cart>;
 }) {
-  const [, setCart] = useCart();
+  const setCart = useSetAtom(cartAtom, { store: useStore() });
   return (
     <button
       className="mt-6 px-8 py-2 text-lg font-bold text-white bg-blue-800 rounded-lg"

@@ -1,15 +1,25 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { Review } from "@/api/types";
+import { useAtom, useStore } from "jotai";
+import { reviewsAtom } from "@/app/store/atoms";
 
 export default function Reviews({
-  reviews,
+  reviews: initialReviews,
   addReviewAction,
 }: {
   reviews: Review[];
   addReviewAction: (text: string, rating: number) => Promise<Review[]>;
 }) {
+  const store = useStore();
+  const loaded = useRef(false);
+  if (!loaded.current) {
+    store.set(reviewsAtom, initialReviews);
+    loaded.current = true;
+  }
+
+  const [reviews, setReviews] = useAtom(reviewsAtom, { store });
   const [reviewText, setReviewText] = useState("");
   const [reviewRating, setReviewRating] = useState(5);
 
@@ -28,7 +38,7 @@ export default function Reviews({
       <form
         onSubmit={async (evt) => {
           evt.preventDefault();
-          await addReviewAction(reviewText, reviewRating);
+          setReviews(await addReviewAction(reviewText, reviewRating));
           setReviewText("");
           setReviewRating(5);
         }}

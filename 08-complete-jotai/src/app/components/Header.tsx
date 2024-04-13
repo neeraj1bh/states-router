@@ -1,17 +1,27 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 
 import CartPopup from "./CartPopup";
 import { type Cart } from "@/api/types";
-import { useCart } from "./CartContext";
+import { useAtomValue, useStore } from "jotai";
+import { cartAtom } from "../store/atoms";
 
 export default function Header({
+  cart: initialCart,
   clearCartAction,
 }: {
+  cart: Cart;
   clearCartAction: () => Promise<Cart>;
 }) {
-  const [cart] = useCart();
+  const store = useStore();
+  const loaded = useRef(false);
+  if (!loaded.current) {
+    store.set(cartAtom, initialCart);
+    loaded.current = true;
+  }
+
+  const cart = useAtomValue(cartAtom, { store });
   const [showCart, setShowCart] = useState(false);
 
   return (
