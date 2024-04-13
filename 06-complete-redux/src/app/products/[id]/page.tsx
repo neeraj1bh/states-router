@@ -61,7 +61,7 @@ export default async function ProductDetail({
         <div className="mt-1 text-sm leading-5 text-gray-300 font-light italic">
           {product.description}
         </div>
-        <AverageRating reviews={product.reviews} />
+        {/* <AverageRating reviews={product.reviews} /> */}
         <div className="flex justify-end">
           <AddToCart addToCartAction={addToCartAction} />
         </div>
